@@ -5,7 +5,6 @@ class Student:
         self.surname = surname
         self.gender = gender
         self.finished_courses = []
-        self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
 
@@ -21,6 +20,25 @@ class Student:
         else:
             return 'Ошибка'
 
+    def _average_homework_grade(self):
+        sum = 0
+        count = 0
+
+        for key, value in self.grades.items():
+            sum += value
+            count += 1
+
+        return sum / count
+
+    def __lt__(self, other):
+        return self._average_homework_grade() < other._average_homework_grade()
+
+    def __str__(self):
+        print(f'Имя: {self.name}\nФамилия: {self.surname}\n'
+              f'Средняя оценка за лекции: {format(self._average_homework_grade(), '.1f')}\n'
+              f'Курсы в процессе изучения: {', '.join(self.courses_in_progress)}\n'
+              f'Завершенные курсы: {', '.join(self.finished_courses)}')
+
 
 class Mentor:
 
@@ -34,7 +52,25 @@ class Lecturer(Mentor):
     def __init__(self, name, surname):
         super().__init__(name, surname)
         self.grades = {}
-    
+
+    def _average_lections_grade(self):
+        sum = 0
+        count = 0
+
+        for key, value in self.grades.items():
+            sum += value
+            count += 1
+
+        return sum / count
+
+    def __lt__(self, other):
+        return self._average_lections_grade() < other._average_lections_grade()
+
+    def __str__(self):
+        print(f'Имя: {self.name}\n'
+              f'Фамилия: {self.surname}\n'
+              f'Средняя оценка за лекции: {format(self._average_lections_grade(), '.1f')}')
+
 
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
@@ -46,3 +82,5 @@ class Reviewer(Mentor):
         else:
             return 'Ошибка'
 
+    def __str__(self):
+        print(f'Имя: {self.name}\nФамилия: {self.surname}')
