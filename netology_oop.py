@@ -29,5 +29,9 @@ class Mentor:
         else:
             return 'Ошибка'
 
+class Lecturer(Mentor):
+    pass
 
+class Reviewer(Mentor):
+    pass
 
